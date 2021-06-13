@@ -29,38 +29,49 @@
             <div class="card-footer">
                 <div class="btn-group d-flex">
                     <button class="btn btn-primary">Like</button>
-                    <button class="btn btn-success">Message</button>
+                    <button class="btn btn-success" (click)="selectTab(4)">Message</button>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="col-8">
-        <tabset class="member-tabset">
-            <tab heading='About {{ member.knownAs }}'>
+        <ul ngbNav #memberTabs="ngbNav" [(activeId)]="activeTabId" class="nav-tabs">
+            <li [ngbNavItem]="1">
+              <a ngbNavLink>About {{ member.knownAs }}</a>
+              <ng-template ngbNavContent>
                 <h4>Description</h4>
                 <p>{{ member.introduction }}</p>
 
                 <h4>Looking for</h4>
                 <p>{{ member.lookingFor }}</p>
-            </tab>
-
-            <tab heading='Interests'>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="2">
+              <a ngbNavLink>Interests</a>
+              <ng-template ngbNavContent>
                 <h4>Interests</h4>
                 <p>{{ member.interests }}</p>
-            </tab>
-
-            <tab heading='Photos'>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="3">
+              <a ngbNavLink>Photos</a>
+              <ng-template ngbNavContent>
                 <ngx-gallery 
                     [options]="galleryOptions"
                     [images]="galleryImages"
                     style="display: inline-block; margin-bottom: 20px;"
                     ></ngx-gallery>
-            </tab>
-
-            <tab heading='Messages'>
-                <p>Messages will go here</p>
-            </tab>
-        </tabset>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="4">
+                <a ngbNavLink>Messages</a>
+                <ng-template ngbNavContent>
+                    <app-member-messages [username]="member.username"></app-member-messages>
+                </ng-template>
+              </li>
+          </ul>
+          
+          <div [ngbNavOutlet]="memberTabs" class="mt-2"></div>
     </div>
 </div>
